@@ -1,11 +1,11 @@
 #' plot estimate at each lag and confidence intervals using ggplot2
 #'
 #' @param lag_fits tibble containing lag, estimate, and lower and upper bounds of
-#'                 confidence intervals; most likely output from tidy_lag_fits() or
-#'                 tidy_cumul_fits()
-#' @param continuous logical. When TRUE, creates a plot with geom_line and geom_ribbon (used
-#'                    when arglag is a continuous function). When FALSE, creates a plot with
-#'                    geom_pointrange (used when arglag is not a continuous function -- eg,
+#'                 confidence intervals; most likely output from [tidydlnm::tidy_lag_fits()] or
+#'                 [tidydlnm::tidy_cumul_fits()]
+#' @param continuous logical. When TRUE, creates a plot with [ggplot2::geom_line()] and [ggplot2::geom_ribbon()]
+#'                   (used when `arglag` is a continuous function). When FALSE, creates a plot with
+#'                    [ggplot2::geom_pointrange()] (used when `arglag` is not a continuous function -- eg,
 #'                    'integer' or 'strata')
 #'
 #' @return a ggplot object

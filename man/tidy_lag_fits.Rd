@@ -7,11 +7,11 @@
 tidy_lag_fits(cpred)
 }
 \arguments{
-\item{cpred}{a crosspred object created from dlnm::crosspred()}
+\item{cpred}{a crosspred object created from \code{\link[dlnm:crosspred]{dlnm::crosspred()}}}
 }
 \value{
-a tibble containing lag, estimate, se, and lower and upper
-95\% confidence bounds
+a tibble with columns for lag, estimate, se, and lower and upper
+95\% confidence bounds (one row per lag)
 }
 \description{
 get tibble of estimates at each lag

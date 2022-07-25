@@ -1,9 +1,9 @@
 #' get tibble of estimates at each lag
 #'
-#' @param cpred a crosspred object created from dlnm::crosspred()
+#' @param cpred a crosspred object created from [`dlnm::crosspred()`]
 #'
-#' @return a tibble containing lag, estimate, se, and lower and upper
-#'         95% confidence bounds
+#' @return a tibble with columns for lag, estimate, se, and lower and upper
+#'         95% confidence bounds (one row per lag)
 #' @export
 tidy_lag_fits <- function(cpred) {
   tibble::tibble(
@@ -15,11 +15,11 @@ tidy_lag_fits <- function(cpred) {
   )
 }
 
-#' get tibble of overall effect estimate
+#' get tibble of overall effect estimates
 #'
-#' @param cpred a crosspred object created from dlnm::crosspred()
+#' @inheritParams tidy_lag_fits
 #'
-#' @return a tibble containing estimate, se, and lower and upper
+#' @return a tibble with columns for estimate, se, and lower and upper
 #'         95% confidence bounds (1 row)
 #' @export
 tidy_overall_fit <- function(cpred) {
@@ -33,10 +33,10 @@ tidy_overall_fit <- function(cpred) {
 
 #' get tibble of cumulative estimates at each lag
 #'
-#' @param cpred a crosspred object created from dlnm::crosspred()
+#' @inheritParams tidy_lag_fits
 #'
-#' @return a tibble containing lag, estimate, se, and lower and upper
-#'         95% confidence bounds
+#' @return a tibble with columns for lag, estimate, se, and lower and upper
+#'         95% confidence bounds (one row per lag)
 #' @export
 tidy_cumul_fits <- function(cpred) {
   if (!is.null(cpred$cumfit)) {
