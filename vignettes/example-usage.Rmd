@@ -1,36 +1,22 @@
 ---
-output: github_document
+title: "Example Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
+```{r, include = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  comment = "#>"
 )
 ```
 
-# tidydlnm
-
-<!-- badges: start -->
-<!-- badges: end -->
-
-The goal of tidydlnm is to make outputs from the package [`dlnm`](https://github.com/gasparrini/dlnm) more tidyverse-friendly.
-
-**Note: Only DLMs are currently supported. DLNM support coming soon.**
-
-## Installation
-
-You can install tidydlnm from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("geomarker-io/tidydlnm")
+```{r setup}
+library(tidydlnm)
 ```
-## Example
 
 Suppose we have the following data, where lags 0 through 9 are the values of some exposure experienced 0 to 9 days before the outcome `y`.
 
@@ -57,7 +43,6 @@ d <- d %>%
 d
 ```
 
-
 First, use the `dlnm` package to fit a distributed lag model. We create the crossbasis, fit the model, and create the crosspred object. (For more info, see [https://github.com/gasparrini/dlnm](https://github.com/gasparrini/dlnm)). 
 
 ```{r, message = F}
@@ -71,24 +56,22 @@ mod <- lm(y ~ cb, data=d)
 cpred <- crosspred(cb, mod, at=1, cumul = TRUE)
 ```
 
-Then use `tidydlnm` to obtain more tidyverse-friendly output and plots, including 
+Then use `tidydlnm` to obtain more tidyverse-friendly output and plots. 
 
-- the estimates at each lag
+## Effect estimates at each lag
 
 ```{r}
-library(tidydlnm)
-
 lag_fits <- tidy_lag_fits(cpred)
 tidy_lag_plot(lag_fits)
 ```
 
-- the estimated effect over all lags
+## Estimated effect over all lags
 
 ```{r}
 tidy_overall_fit(cpred)
 ```
 
-- cumulative effect estimates at each lag
+## Cumulative effect estimates at each lag
 
 ```{r}
 cumul_fits <- tidy_cumul_fits(cpred)
@@ -101,3 +84,4 @@ tidy_lag_plot(cumul_fits) +
   ylab("Estimate") +
   theme_minimal()
 ```
+
