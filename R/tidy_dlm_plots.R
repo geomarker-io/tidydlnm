@@ -17,16 +17,14 @@ tidy_lag_plot <- function(lag_fits, continuous = TRUE) {
       geom_pointrange(aes(x = lag, y = estimate, ymin = ci_lower, ymax = ci_upper))
   } else {
     p <- ggplot(lag_fits) +
-      geom_ribbon(aes(ymax=ci_upper, ymin=ci_lower, x=lag, group=1), alpha=0.3) +
-      geom_line(aes(x=lag,y=estimate, group=1)) +
-      geom_hline(yintercept=0, linetype=2)
+      geom_ribbon(aes(ymax = ci_upper, ymin = ci_lower, x = lag, group = 1), alpha = 0.3) +
+      geom_line(aes(x = lag, y = estimate, group = 1)) +
+      geom_hline(yintercept = 0, linetype = 2)
   }
 
   p +
     theme_classic() +
     ylab("Regression Coefficient") +
     xlab("Lag") +
-    scale_x_continuous(breaks=lag)
+    scale_x_continuous(breaks = lag)
 }
-
-

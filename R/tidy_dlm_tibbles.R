@@ -6,11 +6,13 @@
 #'         95% confidence bounds
 #' @export
 tidy_lag_fits <- function(cpred) {
-  tibble::tibble(lag = seq(cpred$lag[1], cpred$lag[2]),
-                 estimate = c(cpred$matfit),
-                 se = c(cpred$matse),
-                 ci_lower = c(cpred$matlow),
-                 ci_upper = c(cpred$mathigh))
+  tibble::tibble(
+    lag = seq(cpred$lag[1], cpred$lag[2]),
+    estimate = c(cpred$matfit),
+    se = c(cpred$matse),
+    ci_lower = c(cpred$matlow),
+    ci_upper = c(cpred$mathigh)
+  )
 }
 
 #' get tibble of overall effect estimate
@@ -21,10 +23,12 @@ tidy_lag_fits <- function(cpred) {
 #'         95% confidence bounds (1 row)
 #' @export
 tidy_overall_fit <- function(cpred) {
-  tibble::tibble(estimate = c(cpred$allfit),
-                 se = c(cpred$allse),
-                 ci_lower = c(cpred$alllow),
-                 ci_upper = c(cpred$allhigh))
+  tibble::tibble(
+    estimate = c(cpred$allfit),
+    se = c(cpred$allse),
+    ci_lower = c(cpred$alllow),
+    ci_upper = c(cpred$allhigh)
+  )
 }
 
 #' get tibble of cumulative estimates at each lag
@@ -36,11 +40,13 @@ tidy_overall_fit <- function(cpred) {
 #' @export
 tidy_cumul_fits <- function(cpred) {
   if (!is.null(cpred$cumfit)) {
-    tibble::tibble(lag = seq(cpred$lag[1], cpred$lag[2]),
-                   estimate = c(cpred$cumfit),
-                   se = c(cpred$cumse),
-                   ci_lower = c(cpred$cumlow),
-                   ci_upper = c(cpred$cumhigh))
+    tibble::tibble(
+      lag = seq(cpred$lag[1], cpred$lag[2]),
+      estimate = c(cpred$cumfit),
+      se = c(cpred$cumse),
+      ci_lower = c(cpred$cumlow),
+      ci_upper = c(cpred$cumhigh)
+    )
   } else {
     cli::cli_alert_warning("Your crosspred object does not contain cumulative fit estimates. Please re-run crosspred with `cumul = TRUE`.")
   }
