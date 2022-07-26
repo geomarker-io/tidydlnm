@@ -10,9 +10,11 @@ Imports:
     cli (>= 2.5.0),
     dlnm (>= 2.4.5),
     ggplot2 (>= 3.3.3),
+    rlang,
     tibble (>= 3.1.1)
 Suggests: 
     dplyr (>= 1.0.6),
+    grDevices,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

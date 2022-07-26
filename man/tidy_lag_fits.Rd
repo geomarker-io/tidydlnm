@@ -4,7 +4,7 @@
 \alias{tidy_lag_fits}
 \title{get tibble of estimates at each lag}
 \usage{
-tidy_lag_fits(cpred)
+tidy_lag_fits(cpred, call = rlang::caller_env())
 }
 \arguments{
 \item{cpred}{a crosspred object created from \code{\link[dlnm:crosspred]{dlnm::crosspred()}}}

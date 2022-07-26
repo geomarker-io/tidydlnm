@@ -5,7 +5,9 @@
 #' @return a tibble with columns for lag, estimate, se, and lower and upper
 #'         95% confidence bounds (one row per lag)
 #' @export
-tidy_lag_fits <- function(cpred) {
+tidy_lag_fits <- function(cpred, call = rlang::caller_env()) {
+  check_cpred(cpred, call = call)
+
   tibble::tibble(
     lag = seq(cpred$lag[1], cpred$lag[2]),
     estimate = c(cpred$matfit),
@@ -23,6 +25,8 @@ tidy_lag_fits <- function(cpred) {
 #'         95% confidence bounds (1 row)
 #' @export
 tidy_overall_fit <- function(cpred) {
+  check_cpred(cpred, call = call)
+
   tibble::tibble(
     estimate = c(cpred$allfit),
     se = c(cpred$allse),
@@ -39,6 +43,8 @@ tidy_overall_fit <- function(cpred) {
 #'         95% confidence bounds (one row per lag)
 #' @export
 tidy_cumul_fits <- function(cpred) {
+  check_cpred(cpred, call = call)
+
   if (!is.null(cpred$cumfit)) {
     tibble::tibble(
       lag = seq(cpred$lag[1], cpred$lag[2]),
@@ -48,6 +54,19 @@ tidy_cumul_fits <- function(cpred) {
       ci_upper = c(cpred$cumhigh)
     )
   } else {
-    cli::cli_alert_warning("Your crosspred object does not contain cumulative fit estimates. Please re-run crosspred with `cumul = TRUE`.")
+    cli::cli_abort(message = c("x" = "Your crosspred object does not contain cumulative fit estimates.",
+                               "!" = "Please re-run crosspred with `cumul = TRUE`."))
   }
 }
+
+
+check_cpred <- function(cpred,
+                        arg = rlang::caller_arg(cpred),
+                        call = rlang::caller_env()) {
+  if (! class(cpred) == "crosspred") {
+    cli::cli_abort(message = c("x" = "{.arg {arg}} must be of type crosspred",
+                               "i" = "see {.url https://github.com/gasparrini/dlnm} for more information about crosspred objects."),
+                   call = call)
+  }
+}
+
