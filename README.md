@@ -1,6 +1,7 @@
 # tidydlnm
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/geomarker-io/tidydlnm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/geomarker-io/tidydlnm/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of tidydlnm is to make outputs from the package [`dlnm`](https://github.com/gasparrini/dlnm) more tidyverse-friendly.

@@ -8,6 +8,13 @@
 \description{
 tidydlnm is a wrapper package that converts output from the dlnm package into more tidyverse-friendly tibbles and plots.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{http://geomarker.io/tidydlnm/}
+}
+
+}
 \author{
 \strong{Maintainer}: Erika Rasnick \email{erika.rasnick@cchmc.org}
 
