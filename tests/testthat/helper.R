@@ -1,4 +1,4 @@
-ex_dlm_cpred <- function() {
+ex_dlm_cpred <- function(cumul = TRUE) {
   set.seed(212)
   d <- tibble::tibble(lag0 = rnorm(n = 100, mean = 0.3, sd = 1))
   d <- dplyr::mutate(d,
@@ -22,11 +22,11 @@ ex_dlm_cpred <- function() {
     arglag = list(fun = "integer")
   )
   mod <- lm(y ~ cb, data = d)
-  cpred <- dlnm::crosspred(cb, mod, at = 1, cumul = TRUE)
+  cpred <- dlnm::crosspred(cb, mod, at = 1, cumul = cumul)
   return(cpred)
 }
 
-ex_dlnm_cpred <- function() {
+ex_dlnm_cpred <- function(cumul = cumul) {
   set.seed(212)
   d <- tibble::tibble(lag0 = rnorm(n = 100, mean = 0.3, sd = 1))
   d <- dplyr::mutate(d,
@@ -50,36 +50,6 @@ ex_dlnm_cpred <- function() {
     arglag = list(fun = "ns", df = 3)
   )
   mod <- lm(y ~ cb, data = d)
-  cpred <- dlnm::crosspred(cb, mod, cumul = TRUE)
+  cpred <- dlnm::crosspred(cb, mod, cumul = cumul)
   return(cpred)
 }
-
-save_png <- function(code, width = 400, height = 400) {
-  path <- tempfile(fileext = ".png")
-  png(path, width = width, height = height)
-  on.exit(dev.off())
-  code
-
-  path
-}
-
-expect_snapshot_plot <- function(name, code) {
-  name <- paste0(name, ".png")
-
-  # Announce the file before touching `code`. This way, if `code`
-  # unexpectedly fails or skips, testthat will not auto-delete the
-  # corresponding snapshot file.
-  announce_snapshot_file(name = name)
-
-  path <- save_png(code)
-  expect_snapshot_file(path, name)
-}
-
-# lag_fits <- tidy_lag_fits(ex_dlm_cpred())
-#
-# tidy_lag_plot(lag_fits, continuous = FALSE) +
-#   ylab("Estimate") +
-#   theme_minimal()
-#
-# cumul_fits <- tidy_cumul_fits(cpred)
-# tidy_lag_plot(cumul_fits)

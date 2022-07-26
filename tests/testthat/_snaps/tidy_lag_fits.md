@@ -17,3 +17,19 @@
        9     8    0.952 1.37    -1.73     3.63 
       10     9   -1.49  0.936   -3.33     0.343
 
+# throw object type error
+
+    Code
+      tidy_lag_fits(1)
+    Error <rlang_error>
+      x `cpred` must be of type crosspred
+      i see <https://github.com/gasparrini/dlnm> for more information about crosspred objects.
+
+# throw cumulative fits error
+
+    Code
+      tidy_cumul_fits(cpred = ex_dlm_cpred(cumul = FALSE))
+    Error <rlang_error>
+      x Your crosspred object does not contain cumulative fit estimates.
+      ! Please re-run crosspred with `cumul = TRUE`.
+
