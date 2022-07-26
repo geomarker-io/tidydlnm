@@ -8,6 +8,8 @@ tidy_lag_fits(cpred, call = rlang::caller_env())
 }
 \arguments{
 \item{cpred}{a crosspred object created from \code{\link[dlnm:crosspred]{dlnm::crosspred()}}}
+
+\item{call}{used for error handling}
 }
 \value{
 a tibble with columns for lag, estimate, se, and lower and upper

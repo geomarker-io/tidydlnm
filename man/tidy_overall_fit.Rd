@@ -4,10 +4,12 @@
 \alias{tidy_overall_fit}
 \title{get tibble of overall effect estimates}
 \usage{
-tidy_overall_fit(cpred)
+tidy_overall_fit(cpred, call = rlang::caller_env())
 }
 \arguments{
 \item{cpred}{a crosspred object created from \code{\link[dlnm:crosspred]{dlnm::crosspred()}}}
+
+\item{call}{used for error handling}
 }
 \value{
 a tibble with columns for estimate, se, and lower and upper

@@ -1,6 +1,7 @@
 #' get tibble of estimates at each lag
 #'
 #' @param cpred a crosspred object created from [`dlnm::crosspred()`]
+#' @param call used for error handling
 #'
 #' @return a tibble with columns for lag, estimate, se, and lower and upper
 #'         95% confidence bounds (one row per lag)
@@ -24,7 +25,7 @@ tidy_lag_fits <- function(cpred, call = rlang::caller_env()) {
 #' @return a tibble with columns for estimate, se, and lower and upper
 #'         95% confidence bounds (1 row)
 #' @export
-tidy_overall_fit <- function(cpred) {
+tidy_overall_fit <- function(cpred, call = rlang::caller_env()) {
   check_cpred(cpred, call = call)
 
   tibble::tibble(
@@ -42,7 +43,7 @@ tidy_overall_fit <- function(cpred) {
 #' @return a tibble with columns for lag, estimate, se, and lower and upper
 #'         95% confidence bounds (one row per lag)
 #' @export
-tidy_cumul_fits <- function(cpred) {
+tidy_cumul_fits <- function(cpred, call = rlang::caller_env()) {
   check_cpred(cpred, call = call)
 
   if (!is.null(cpred$cumfit)) {
