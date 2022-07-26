@@ -80,6 +80,8 @@ cumul_fits <- tidy_cumul_fits(cpred)
 Note that the same plotting function can be used to plot the cumulative estimates. Also, since this is a ggplot object, the plot can be customized as any other ggplot. 
 
 ```{r}
+library(ggplot2)
+
 tidy_lag_plot(cumul_fits) +
   ylab("Estimate") +
   theme_minimal()
