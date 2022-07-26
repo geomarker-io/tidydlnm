@@ -2,5 +2,6 @@
 
 export(tidy_cumul_fits)
 export(tidy_lag_fits)
+export(tidy_lag_plot)
 export(tidy_overall_fit)
 import(ggplot2)
