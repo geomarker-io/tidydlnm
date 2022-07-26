@@ -16,19 +16,19 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(tidydlnm)
+library(tibble)
+library(dplyr)
+library(dlnm)
 ```
 
 Suppose we have the following data, where lags 0 through 9 are the values of some exposure experienced 0 to 9 days before the outcome `y`.
 
 ```{r, echo = F}
-library(tidyverse)
-library(dlnm)
 set.seed(212)
-d <- data.frame(rnorm(n=100, mean=0.3, sd=1))
-names(d) <- c("lag0")
+d <- tibble::tibble(lag0 = rnorm(n=100, mean=0.3, sd=1))
+
 d <- d %>%
-    as_tibble() %>%
-    mutate(lag1 = rnorm(n=100, mean=lag0, sd=1),
+    dplyr::mutate(lag1 = rnorm(n=100, mean=lag0, sd=1),
            lag2 = rnorm(n=100, mean=lag1, sd=1),
            lag3 = rnorm(n=100, mean=lag2, sd=1),
            lag4 = rnorm(n=100, mean=lag3, sd=1),
@@ -39,7 +39,7 @@ d <- d %>%
            lag9 = rnorm(n=100, mean=lag8, sd=1))
 
 d <- d %>%
-    mutate(y = rnorm(100, mean = 53.5 + 2*(lag3+lag4), sd=10))
+    dplyr::mutate(y = rnorm(100, mean = 53.5 + 2*(lag3+lag4), sd=10))
 
 d
 ```
@@ -47,13 +47,13 @@ d
 First, use the `dlnm` package to fit a distributed lag model. We create the crossbasis, fit the model, and create the crosspred object. (For more info, see [https://github.com/gasparrini/dlnm](https://github.com/gasparrini/dlnm)). 
 
 ```{r, message = F}
-Q <- select(d, lag0:lag9)
+Q <- dplyr::select(d, lag0:lag9)
 
-cb <- crossbasis(Q, lag=9,
+cb <- dlnm::crossbasis(Q, lag=9,
                    argvar=list("lin"),
                    arglag=list(fun="ns"))
 mod <- lm(y ~ cb, data=d)
-cpred <- crosspred(cb, mod, at=1, cumul = TRUE)
+cpred <- dlnm::crosspred(cb, mod, at=1, cumul = TRUE)
 ```
 
 Then use `tidydlnm` to obtain more tidyverse-friendly output and plots. 
