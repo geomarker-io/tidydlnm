@@ -94,6 +94,11 @@ tidy_overall_fit(cpred)
 cumul_fits <- tidy_cumul_fits(cpred)
 ```
 
+Add optional shading to plot of estimates at each lag with the `shading` argument.
+```{r}
+tidy_lag_plot(lag_fits, shading = T)
+```
+
 Note that the same plotting function can be used to plot the cumulative estimates. Also, since this is a ggplot object, the plot can be customized as any other ggplot. 
 
 ```{r}
