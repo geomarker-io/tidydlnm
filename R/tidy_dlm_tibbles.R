@@ -10,8 +10,7 @@ tidy_lag_fits <- function(cpred) {
                  estimate = c(cpred$matfit),
                  se = c(cpred$matse),
                  ci_lower = c(cpred$matlow),
-                 ci_upper = c(cpred$mathigh),
-                 signSum = as.factor(c(sign(ci_lower) + sign(ci_upper))))
+                 ci_upper = c(cpred$mathigh))
 }
 
 #' get tibble of overall effect estimate
