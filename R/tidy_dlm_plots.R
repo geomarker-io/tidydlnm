@@ -19,7 +19,6 @@
 tidy_lag_plot <- function(lag_fits, continuous = TRUE, shading = FALSE, shade_colors = c("red", NA, "blue")) {
   shade_len_start <- function(row_num) {
     before <- sum(as.numeric(as.character(lag_fits$signSum[(row_num - 1):row_num])))
-
     if (row_num == 1) {
       start <- 0
     } else if (before == 2) {

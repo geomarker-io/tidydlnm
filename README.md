@@ -25,7 +25,7 @@ devtools::install_github("geomarker-io/tidydlnm")
 Suppose we have the following data, where lags 0 through 9 are the
 values of some exposure experienced 0 to 9 days before the outcome `y`.
 
-    #> # A tibble: 100 x 11
+    #> # A tibble: 100 × 11
     #>       lag0   lag1   lag2   lag3   lag4   lag5   lag6   lag7   lag8   lag9     y
     #>      <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>
     #>  1  0.0608  0.309  1.29   1.29   0.782 -0.482 -0.886 -1.93  -1.57  -1.48   49.1
@@ -58,7 +58,7 @@ cpred <- crosspred(cb, mod, at=1, cumul = TRUE)
 Then use `tidydlnm` to obtain more tidyverse-friendly output and plots,
 including
 
--   the estimates at each lag
+- the estimates at each lag
 
 ``` r
 library(tidydlnm)
@@ -69,21 +69,30 @@ tidy_lag_plot(lag_fits)
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
--   the estimated effect over all lags
+- the estimated effect over all lags
 
 ``` r
 tidy_overall_fit(cpred)
-#> # A tibble: 1 x 4
+#> # A tibble: 1 × 4
 #>   estimate    se ci_lower ci_upper
 #>      <dbl> <dbl>    <dbl>    <dbl>
 #> 1     4.63 0.720     3.22     6.04
 ```
 
--   cumulative effect estimates at each lag
+- cumulative effect estimates at each lag
 
 ``` r
 cumul_fits <- tidy_cumul_fits(cpred)
 ```
+
+Add optional shading to plot of estimates at each lag with the `shading`
+argument.
+
+``` r
+tidy_lag_plot(lag_fits, shading = T)
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 Note that the same plotting function can be used to plot the cumulative
 estimates. Also, since this is a ggplot object, the plot can be
@@ -95,4 +104,4 @@ tidy_lag_plot(cumul_fits) +
   theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
