@@ -27,7 +27,7 @@ tidy_lag_plot <- function(lag_fits, continuous = TRUE) {
     theme_classic() +
     ylab("Regression Coefficient") +
     xlab("Lag") +
-    scale_x_continuous(breaks = lag)
+    scale_x_continuous(breaks = lag_fits$lag)
   return(p)
 }
 
