@@ -2,23 +2,26 @@ Package: tidydlnm
 Title: Wrapper Package for Tidy DLNM Output and Plots
 Version: 0.0.1
 Authors@R: 
-    person(given = "Erika",
-           family = "Rasnick",
-           role = c("aut", "cre"),
-           email = "erika.rasnick@cchmc.org")
-Description: tidydlnm is a wrapper package that converts output from the dlnm package
-              into more tidyverse-friendly tibbles and plots.
+    person("Erika", "Rasnick", , "erika.rasnick@cchmc.org", role = c("aut", "cre"))
+Description: tidydlnm is a wrapper package that converts output from the
+    dlnm package into more tidyverse-friendly tibbles and plots.
 License: GPL (>= 3)
+Imports: 
+    cli (>= 2.5.0),
+    ggplot2 (>= 3.3.3),
+    tibble (>= 3.1.1)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Suggests: 
     dplyr (>= 1.0.6),
+    grDevices,
+    knitr,
+    rmarkdown,
+    rlang,
+    dlnm (>= 2.4.5),
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Imports: 
-    tibble (>= 3.1.1),
-    dlnm (>= 2.4.5),
-    ggplot2 (>= 3.3.3),
-    cli (>= 2.5.0)
+URL: http://geomarker.io/tidydlnm/
+VignetteBuilder: knitr

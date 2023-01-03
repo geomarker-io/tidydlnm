@@ -1,47 +1,34 @@
 ---
-output: github_document
+title: "Example Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  comment = "#>"
 )
 ```
 
-# tidydlnm
-
-<!-- badges: start -->
-<!-- badges: end -->
-
-The goal of tidydlnm is to make outputs from the package [`dlnm`](https://github.com/gasparrini/dlnm) more tidyverse-friendly.
-
-**Note: Only DLMs are currently supported. DLNM support coming soon.**
-
-## Installation
-
-You can install tidydlnm from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("geomarker-io/tidydlnm")
+```{r setup}
+library(tidydlnm)
+library(tibble)
+library(dplyr)
+library(dlnm)
 ```
-## Example
 
 Suppose we have the following data, where lags 0 through 9 are the values of some exposure experienced 0 to 9 days before the outcome `y`.
 
-```{r, echo = F, message = F}
-library(tidyverse)
+```{r, echo = F}
 set.seed(212)
-d <- data.frame(rnorm(n=100, mean=0.3, sd=1))
-names(d) <- c("lag0")
+d <- tibble::tibble(lag0 = rnorm(n=100, mean=0.3, sd=1))
+
 d <- d %>%
-    as_tibble() %>%
-    mutate(lag1 = rnorm(n=100, mean=lag0, sd=1),
+    dplyr::mutate(lag1 = rnorm(n=100, mean=lag0, sd=1),
            lag2 = rnorm(n=100, mean=lag1, sd=1),
            lag3 = rnorm(n=100, mean=lag2, sd=1),
            lag4 = rnorm(n=100, mean=lag3, sd=1),
@@ -52,43 +39,39 @@ d <- d %>%
            lag9 = rnorm(n=100, mean=lag8, sd=1))
 
 d <- d %>%
-    mutate(y = rnorm(100, mean = 53.5 + 2*(lag3+lag4), sd=10))
+    dplyr::mutate(y = rnorm(100, mean = 53.5 + 2*(lag3+lag4), sd=10))
 
 d
 ```
 
-
 First, use the `dlnm` package to fit a distributed lag model. We create the crossbasis, fit the model, and create the crosspred object. (For more info, see [https://github.com/gasparrini/dlnm](https://github.com/gasparrini/dlnm)). 
 
 ```{r, message = F}
-library(dlnm)
-Q <- select(d, lag0:lag9)
+Q <- dplyr::select(d, lag0:lag9)
 
-cb <- crossbasis(Q, lag=9,
+cb <- dlnm::crossbasis(Q, lag=9,
                    argvar=list("lin"),
                    arglag=list(fun="ns"))
 mod <- lm(y ~ cb, data=d)
-cpred <- crosspred(cb, mod, at=1, cumul = TRUE)
+cpred <- dlnm::crosspred(cb, mod, at=1, cumul = TRUE)
 ```
 
-Then use `tidydlnm` to obtain more tidyverse-friendly output and plots, including 
+Then use `tidydlnm` to obtain more tidyverse-friendly output and plots. 
 
-- the estimates at each lag
+## Effect estimates at each lag
 
 ```{r}
-library(tidydlnm)
-
 lag_fits <- tidy_lag_fits(cpred)
 tidy_lag_plot(lag_fits)
 ```
 
-- the estimated effect over all lags
+## Estimated effect over all lags
 
 ```{r}
 tidy_overall_fit(cpred)
 ```
 
-- cumulative effect estimates at each lag
+## Cumulative effect estimates at each lag
 
 ```{r}
 cumul_fits <- tidy_cumul_fits(cpred)
@@ -102,6 +85,8 @@ tidy_lag_plot(lag_fits, shading = T)
 Note that the same plotting function can be used to plot the cumulative estimates. Also, since this is a ggplot object, the plot can be customized as any other ggplot. 
 
 ```{r}
+library(ggplot2)
+
 tidy_lag_plot(cumul_fits) +
   ylab("Estimate") +
   theme_minimal()

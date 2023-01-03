@@ -13,12 +13,11 @@ tidy_lag_plot(
 }
 \arguments{
 \item{lag_fits}{tibble containing lag, estimate, and lower and upper bounds of
-confidence intervals; most likely output from tidy_lag_fits() or
-tidy_cumul_fits()}
+confidence intervals; most likely output from [\verb{tidydlnm::tidy_lag_fits()``] or [}tidydlnm::tidy_cumul_fits()``]}
 
-\item{continuous}{logical. When TRUE, creates a plot with geom_line and geom_ribbon (used
-when arglag is a continuous function). When FALSE, creates a plot with
-geom_pointrange (used when arglag is not a continuous function -- eg,
+\item{continuous}{logical. When TRUE, creates a plot with \code{\link[ggplot2:geom_path]{ggplot2::geom_line()}} and \code{\link[ggplot2:geom_ribbon]{ggplot2::geom_ribbon()}}
+(used when \code{arglag} is a continuous function). When FALSE, creates a plot with
+\code{\link[ggplot2:geom_linerange]{ggplot2::geom_pointrange()}} (used when \code{arglag} is not a continuous function -- eg,
 'integer' or 'strata')}
 
 \item{shading}{logical. When TRUE, adds colored shading to the regions of the plot

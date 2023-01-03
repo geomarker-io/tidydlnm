@@ -4,14 +4,16 @@
 \alias{tidy_cumul_fits}
 \title{get tibble of cumulative estimates at each lag}
 \usage{
-tidy_cumul_fits(cpred)
+tidy_cumul_fits(cpred, call = rlang::caller_env())
 }
 \arguments{
-\item{cpred}{a crosspred object created from dlnm::crosspred()}
+\item{cpred}{a crosspred object created from \code{\link[dlnm:crosspred]{dlnm::crosspred()}}}
+
+\item{call}{used for error handling}
 }
 \value{
-a tibble containing lag, estimate, se, and lower and upper
-95\% confidence bounds
+a tibble with columns for lag, estimate, se, and lower and upper
+95\% confidence bounds (one row per lag)
 }
 \description{
 get tibble of cumulative estimates at each lag

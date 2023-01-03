@@ -2,17 +2,19 @@
 % Please edit documentation in R/tidy_dlm_tibbles.R
 \name{tidy_overall_fit}
 \alias{tidy_overall_fit}
-\title{get tibble of overall effect estimate}
+\title{get tibble of overall effect estimates}
 \usage{
-tidy_overall_fit(cpred)
+tidy_overall_fit(cpred, call = rlang::caller_env())
 }
 \arguments{
-\item{cpred}{a crosspred object created from dlnm::crosspred()}
+\item{cpred}{a crosspred object created from \code{\link[dlnm:crosspred]{dlnm::crosspred()}}}
+
+\item{call}{used for error handling}
 }
 \value{
-a tibble containing estimate, se, and lower and upper
+a tibble with columns for estimate, se, and lower and upper
 95\% confidence bounds (1 row)
 }
 \description{
-get tibble of overall effect estimate
+get tibble of overall effect estimates
 }
