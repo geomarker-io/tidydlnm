@@ -105,3 +105,15 @@ tidy_lag_plot(cumul_fits) +
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+
+For a summary of specific windows of association identified by the
+model, use `tidy_window_summary()`.
+
+``` r
+tidy_window_summary(lag_fits)
+#> # A tibble: 1 × 9
+#>   window_id min_lag max_lag window_len max_estimate    se ci_lower ci_up…¹   lag
+#>       <dbl>   <int>   <int>      <dbl>        <dbl> <dbl>    <dbl>   <dbl> <int>
+#> 1         1       0       7          8        0.938 0.291    0.367    1.51     0
+#> # … with abbreviated variable name ¹​ci_upper
+```
