@@ -92,7 +92,6 @@ tidy_lag_plot(cumul_fits) +
   theme_minimal()
 ```
 
-=======
 For a summary of specific windows of association identified by the model, use `tidy_window_summary()`.
 ```{r}
 tidy_window_summary(lag_fits)
