@@ -7,14 +7,63 @@
 #'                    when arglag is a continuous function). When FALSE, creates a plot with
 #'                    geom_pointrange (used when arglag is not a continuous function -- eg,
 #'                    'integer' or 'strata')
+#' @param shading logical. When TRUE, adds colored shading to the regions of the plot
+#'                corresponding to significant associations as defined by the signSum
+#'                variable of lag_fits
+#' @param shade_colors vector of three colors desired to shade the regions of negative, null,
+#'                     and positive association, respectively.
 #'
 #' @return a ggplot object
 #' @importFrom ggplot2 ggplot aes geom_pointrange geom_ribbon geom_line geom_hline scale_x_continuous theme_classic xlab ylab
 #' @export
-tidy_lag_plot <- function(lag_fits, continuous = TRUE) {
+tidy_lag_plot <- function(lag_fits, continuous = TRUE, shading = FALSE, shade_colors = c("red", NA, "blue")) {
+  shade_len_start <- function(row_num) {
+    before <- sum(as.numeric(as.character(lag_fits$signSum[(row_num - 1):row_num])))
+    if (row_num == 1) {
+      start <- 0
+    } else if (before == 2) {
+      start <- ((lag_fits$ci_lower[row_num - 1])/(lag_fits$ci_lower[row_num - 1] - lag_fits$ci_lower[row_num])) - 1
+    } else if (before == -2) {
+      start <- ((lag_fits$ci_upper[row_num - 1])/(lag_fits$ci_upper[row_num - 1] - lag_fits$ci_upper[row_num])) - 1
+    } else {
+      start <- 0
+    }
+    return(start)
+  }
+
+  shade_len_end <- function(row_num) {
+    after <- sum(as.numeric(as.character(lag_fits$signSum[row_num:(row_num + 1)])))
+    if (row_num == dim(lag_fits)[1]) {
+      end <- 0
+    } else if (after == 2) {
+      end <- ((lag_fits$ci_lower[row_num])/(lag_fits$ci_lower[row_num] - lag_fits$ci_lower[row_num + 1]))
+    } else if (after == -2) {
+      end <- ((lag_fits$ci_upper[row_num])/(lag_fits$ci_upper[row_num] - lag_fits$ci_upper[row_num + 1]))
+    } else {
+      end <- 1
+    }
+    return(end)
+  }
+
   if (!continuous) {
     p <- ggplot(lag_fits) +
       geom_pointrange(aes(x = lag, y = estimate, ymin = ci_lower, ymax = ci_upper))
+  } else if (shading) {
+    lag_fits <- lag_fits %>%
+      mutate(row_num = 1:dim(lag_fits)[1],
+             signSum = as.factor(c(sign(ci_lower) + sign(ci_upper))))
+    lag_fits$shade_start <- sapply(lag_fits$row_num, shade_len_start)
+    lag_fits$shade_end <- sapply(lag_fits$row_num, shade_len_end)
+
+    shade_key <- tibble(direction = c(-2, 0, 2),
+                        color = shade_colors)
+    shade_key <- filter(shade_key, direction %in% lag_fits$signSum)
+    p <- ggplot(lag_fits) +
+      geom_rect(aes(xmin = lag + shade_start, xmax = lag + shade_end, fill = signSum), ymin = -Inf, ymax = Inf, alpha = 0.3) +
+      geom_ribbon(aes(ymax = ci_upper, ymin = ci_lower, x = lag, group = 1), fill = "#D4D4D4", inherit.aes = FALSE) +
+      geom_line(aes(x = lag, y = estimate, group = 1)) +
+      geom_hline(yintercept = 0, linetype = 2) +
+      scale_fill_manual(values = shade_key$color, na.value = NA, guide = "none")
   } else {
     p <- ggplot(lag_fits) +
       geom_ribbon(aes(ymax=ci_upper, ymin=ci_lower, x=lag, group=1), alpha=0.3) +

@@ -4,7 +4,12 @@
 \alias{tidy_lag_plot}
 \title{plot estimate at each lag and confidence intervals using ggplot2}
 \usage{
-tidy_lag_plot(lag_fits, continuous = TRUE)
+tidy_lag_plot(
+  lag_fits,
+  continuous = TRUE,
+  shading = FALSE,
+  shade_colors = c("red", NA, "blue")
+)
 }
 \arguments{
 \item{lag_fits}{tibble containing lag, estimate, and lower and upper bounds of
@@ -15,6 +20,13 @@ tidy_cumul_fits()}
 when arglag is a continuous function). When FALSE, creates a plot with
 geom_pointrange (used when arglag is not a continuous function -- eg,
 'integer' or 'strata')}
+
+\item{shading}{logical. When TRUE, adds colored shading to the regions of the plot
+corresponding to significant associations as defined by the signSum
+variable of lag_fits}
+
+\item{shade_colors}{vector of three colors desired to shade the regions of negative, null,
+and positive association, respectively.}
 }
 \value{
 a ggplot object
