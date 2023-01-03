@@ -77,6 +77,11 @@ tidy_overall_fit(cpred)
 cumul_fits <- tidy_cumul_fits(cpred)
 ```
 
+Add optional shading to plot of estimates at each lag with the `shading` argument.
+```{r}
+tidy_lag_plot(lag_fits, shading = T)
+```
+
 Note that the same plotting function can be used to plot the cumulative estimates. Also, since this is a ggplot object, the plot can be customized as any other ggplot. 
 
 ```{r}
@@ -85,5 +90,11 @@ library(ggplot2)
 tidy_lag_plot(cumul_fits) +
   ylab("Estimate") +
   theme_minimal()
+```
+
+=======
+For a summary of specific windows of association identified by the model, use `tidy_window_summary()`.
+```{r}
+tidy_window_summary(lag_fits)
 ```
 
